@@ -1,3 +1,7 @@
+// Always try to handle all edge cases in every function.
+// Imagine in your mind that how lists and Data structures work and keep coding.
+// Trust me you will get the vibe!
+
 #include "Singly_LinkedList_Node.h"
 
 class LinkedList {
@@ -73,13 +77,52 @@ class LinkedList {
 		tmp->next = current->next;
 		current->next = tmp;
 	}
+	
+	// deleting the list...
+	void deleteAll() {
+		Node* tmp;
+		while (head != NULL) {
+			tmp = head;
+			head = head->next;
+			delete tmp;
+		}
+	}
 
+	// remove node from tail...;
+	void rem_node_from_tail() {
+		if (head == NULL) return;
+		else if (head->next == NULL) {
+			delete head;
+			head = NULL;
+		}
+		else {
+			Node* prev = head, * current = head->next;
+			while (current->next != NULL) {
+				prev = current;
+				current = current->next;
+			}
+			prev->next = current->next;
+			delete current;
+		}
+	}
 
-
+	// removing node at a desired location...;
+	void rem_node_at_tail(int location) {
+		int count = 1;
+		Node* prev = head, * current = head->next;
+		while (current->next != NULL && count < location - 1) {
+			prev = current;
+			current = current->next;
+			count++;
+		}
+		prev->next = current->next;
+		current->next = NULL;
+		delete current; 
+	}
 };
 
 int main() {
 
-
+	cout << "Linked List completed!";
 	return 0;
 }
