@@ -40,6 +40,17 @@ class LinkedList {
 			tmp = tmp->next;
 		}
 	}
+
+//	Printing the items in the list
+	void print() {
+		Node* tmp = head;
+		if (head == NULL) return;
+		while (tmp != NULL) {
+			cout << tmp->data << " ";
+			tmp = tmp->next;
+		}
+	}
+
 };
 
 int main() {
