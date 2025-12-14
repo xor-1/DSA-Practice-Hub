@@ -1,18 +1,9 @@
 #include "Singly_LinkedList_Node.h"
 
-class Node {
-	int data;
-	Node* next = NULL;
-public:
-	Node(int data) {
-		this->data = data;
-	}
-	friend class LinkedList;
-};
-
 class LinkedList {
 	Node* head = NULL;
 
+	// add a node at head
 	void add_node(int data) {
 		Node* tmp = new Node(data);
 
@@ -24,6 +15,15 @@ class LinkedList {
 			head = tmp;
 		}
 	}
+
+	// remove a node from head;
+	void rem_node() {
+		Node* tmp = head;
+		head = head->next;
+		delete tmp;
+	}
+
+
 };
 
 int main() {
