@@ -40,13 +40,10 @@ class LinkedList {
 			tmp = tmp->next;
 		}
 	}
-
-
 };
 
 int main() {
 
 
-	cout << "Program Compiled Successfully!";
 	return 0;
 }
