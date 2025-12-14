@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{22be257c-74d4-4f19-9f11-789a03989507}</ProjectGuid>
+    <ProjectGuid>{bcc3f877-7f10-481b-b387-fc73addc4057}</ProjectGuid>
     <RootNamespace>DSAPracticeHub</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>

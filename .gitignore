@@ -1,0 +1,17 @@
+# Visual Studio / VS Code
+.vs/
+.vscode/
+
+# Build artifacts
+*.exe
+*.out
+*.o
+*.obj
+
+# CMake / build dirs
+build/
+cmake-build-*/
+
+# OS junk
+.DS_Store
+Thumbs.db
