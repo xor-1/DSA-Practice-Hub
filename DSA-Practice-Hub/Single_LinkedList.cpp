@@ -24,6 +24,24 @@ class LinkedList {
 	}
 
 
+/* Linked-List: Traversing the list
+	For what purposes will we need to traverse the list?
+	Searching for an item
+	Printing the items in the list
+	Counting the number of items
+	Adding/removing an item in the middle of list
+	Deleting the whole list */
+
+	void traverse_list() {
+		Node* tmp = head;
+
+		if (tmp == NULL) return;
+		while (tmp != NULL) {
+			tmp = tmp->next;
+		}
+	}
+
+
 };
 
 int main() {
