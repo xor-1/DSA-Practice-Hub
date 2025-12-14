@@ -51,6 +51,31 @@ class LinkedList {
 		}
 	}
 
+	// insert a node at a desirec location in the list;
+	void add_in_middle(int n, int location) {
+		Node* tmp = new Node(n);
+
+		if (location == 1) {
+			add_node(location);
+			return;
+		}
+		Node* current = head;
+		int count = 1;
+
+		while (current != NULL && count < location - 1) {
+			current = current->next;
+			count++;
+		}
+		if (current == NULL) {
+			delete tmp;
+			return;
+		}
+		tmp->next = current->next;
+		current->next = tmp;
+	}
+
+
+
 };
 
 int main() {
