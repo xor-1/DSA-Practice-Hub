@@ -47,6 +47,11 @@ public:
 			current = current->next;
 			count++;
 		}
+		// Check if current is NULL or current->next is NULL (invalid location)
+		if (current == NULL || current->next == NULL) {
+			// Optionally handle error or insert at tail
+			return;
+		}
 		Node* tmp = new Node(data);
 		tmp->next = current->next;
 		tmp->prev = current;
