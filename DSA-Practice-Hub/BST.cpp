@@ -1,158 +1,214 @@
 #include <iostream>
 using namespace std;
-class Node {
+
+class TreeNode {
+public:
 	int data;
-	Node* left = NULL;
-	Node* right = NULL;
-public:
-	Node(int data) {
-		this->data = data;
+	TreeNode* left, * right;
+
+	TreeNode()
+	{
+		left = right = NULL;
+		data = 0;
 	}
-	friend class BST;
 };
+
 class BST {
-	Node* root = NULL;
-
 public:
+	TreeNode* root;
+	TreeNode* previous, * current;
+	BST() {
+		root = previous = current = NULL;
+	}
 
-	// INSERT ELEMENT IN A BST.
-	// NOTE: Every Node will added as a leaf Node!
-	void insertData(int d) {
-		Node* tmp = new Node(d);
-		if (root == NULL) {
-			root = tmp;
-			cout << "The data has been inserted successfully!" << endl;
+	void insert(int d) {
+		TreeNode* nn = new TreeNode;
+		nn->data = d;
+		if (root == NULL)
+		{
+			root = nn;
+			cout << "The data has been inserted successfully" << endl;
 			return;
 		}
-		Node* current = root;
-		Node* prev = NULL;
-
+		current = root;
+		previous = NULL;
 		while (current != NULL) {
-			prev = current;
-			if (tmp->data < current->data)
+			previous = current;
+			if (d < current->data)
 				current = current->left;
 			else
 				current = current->right;
 		}
-		// NOTE: AT THIS POINT WE HAVE OUR "current" AS "NULL"
-		// We will add the Node using our Prev pointer;
-		// we will check for the basic BST requirements
-		if (tmp->data < prev->data)
-			prev->left = tmp;
+		if (nn->data < previous->data)
+			previous->left = nn;
 		else
-			prev->right = tmp;
-		cout << "The data has been added successfully!" << endl;
+			previous->right = nn;
+
+		cout << "The data has been inserted successfully" << endl;
 	}
 
-	// void search by data function
-	void searchByData(int n) {
-		Node* tmp = new Node(n);
-
+	void searchByData(int d) {
 		if (root == NULL) {
-			cout << "THE TREE IS EMPTY" << endl;
+			cout << "The tree is empty" << endl;
 			return;
 		}
-		Node* current = root;
-
-		while (current != NULL) {
-			if (tmp->data == current->data) {
-				cout << "DATA HAS BEEN FOUND: " << current->data << endl;
-				break;
-			}	
-			if (tmp->data < current->data)
+		current = root;
+		while (current != NULL)
+		{
+			if (current->data == d) break;
+			if (d < current->data)
 				current = current->left;
 			else
 				current = current->right;
 		}
 		if (current == NULL) {
-			cout << "Node NOT Found!" << endl;
+			cout << "Node not found" << endl;
 			return;
 		}
-		cout << "Node Found!" << endl;
+		cout << "Node found" << endl;
 	}
 
-	// Traversals....
-	// preorder traversal...
-	void preOrder(Node* tmp){
-		if (tmp != NULL) {
-			cout << tmp->data << " ";
-			preOrder(tmp->left);
-			preOrder(tmp->right);
+	void preOrder(TreeNode* node)
+	{
+		if (node != NULL) {
+			cout << node->data << " ";
+			preOrder(node->left);
+			preOrder(node->right);
 		}
 		else
 			return;
 	}
 
-	// inorder traversal...
-	void inOrder(Node* tmp) {
-		if (tmp != NULL) {
-			inOrder(tmp->left);
-			cout << tmp->data << " ";
-			inOrder(tmp->right);
-		}
-	}
-
-	// postorder traversal
-	void postOrder(Node* tmp) {
-		if (tmp != NULL) {
-			postOrder(tmp->left);
-			postOrder(tmp->right);
-			cout << tmp->data << " ";
+	void inOrder(TreeNode* node) {
+		if (node != NULL) {
+			inOrder(node->left);
+			cout << node->data << " ";
+			inOrder(node->right);
 		}
 		else
 			return;
 	}
 
-	// Display Tree
+	void postOrder(TreeNode* node) {
+		if (node != NULL) {
+			postOrder(node->left);
+			postOrder(node->right);
+			cout << node->data << " ";
+		}
+		else
+			return;
+	}
+
 	void displayTree() {
 		if (root == NULL) {
-			cout << "The Tree is EmptY!" << endl;
+			cout << "The tree is empty" << endl;
 			return;
 		}
+		cout << "Preorder form" << endl;
 		preOrder(root);
-		cout << endl;
+		cout << "Inorder form" << endl;
 		inOrder(root);
-		cout << endl;
+		cout << "Postorder form" << endl;
 		postOrder(root);
 	}
 
-	// deleting a node in BST
 	void deleteNode(int d) {
-		if (root == NULL) { cout << "Tree is Empty!" << endl; return; }
-
-		else {
-			Node* current = root;
-			Node* prev = NULL;
-
-			while (current != NULL) {
-				prev = current;
-				if (d == current->data) break;
-				if (d < current->data)
-					current = current->left;
-				else
-					current = current->right;
-			}
-			if (current == NULL)
-				cout << "Block not found!" << endl;
-			
-			// case1: CONDITION CHECK FOR LEAF NODE!
-
-
+		if (root == NULL) {
+			cout << "Tree is empty" << endl;
+			return;
 		}
-	}
+		previous = NULL;
+		current = root;
+		while (current != NULL)
+		{
+			previous = current;
+			if (current->data == d) break;
+			if (d < current->data)
+				current = current->left;
+			else
+				current = current->right;
+		}
 
+		if (current == NULL) {
+			cout << "Block not found" << endl;
+			return;
+		}
+
+		//case - 1
+		if (current->left == NULL && current->right == NULL) //check leaf node condition
+		{
+			if (current == root) {
+				root = NULL;
+			}
+			else {
+
+				if (previous->left == current)
+					previous->left = NULL;
+				else
+					previous->right = NULL;
+			}
+			delete current;
+			current = NULL;
+			cout << "Node has been deleted successfully" << endl;
+			return;
+		}
+
+		//case 2 
+
+		if (current->left == NULL || current->right == NULL) //node with one child
+		{
+			if (current == root) {
+				if (root->left != NULL)
+					root = root->left;
+				else
+					root = root->right;
+			}
+			else {
+				TreeNode* child = NULL;
+
+				if (current->left != NULL)
+					child = current->left;
+				else
+					child = current->right;
+				if (previous->left == current)
+					previous->left = child;
+				else
+					previous->right = child;
+			}
+			delete current;
+			current = NULL;
+			cout << "The node has been deleted successfully" << endl;
+			return;
+		}
+
+		//case 3 
+		//node with two child
+		TreeNode* parentSucc = current;
+		TreeNode* succ = current->right;
+		while (succ->left != NULL) {
+			parentSucc = succ;
+			succ = succ->left;
+		}
+		current->data = succ->data;
+		if (parentSucc->left == succ)
+			parentSucc->left = succ->right;
+		else
+			parentSucc->right = succ->right;
+		delete succ;
+		succ = NULL;
+		cout << "Node has been deleted successfully" << endl;
+	}
 };
 
 int main() {
-	BST t1;
-	t1.insertData(100);
-	t1.insertData(50);
-	t1.insertData(40);
-	t1.insertData(60);
-	t1.insertData(150);
-	t1.insertData(110);
-	t1.insertData(160);
-	t1.searchByData(60);
-	t1.displayTree();
+	BST tree;
+	tree.insert(100);
+	tree.insert(50);
+	tree.insert(40);
+	tree.insert(60);
+	tree.insert(150);
+	tree.insert(110);
+	tree.insert(160);
+	tree.displayTree();
 	return 0;
 }
